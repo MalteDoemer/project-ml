@@ -120,8 +120,6 @@ namespace ML
                 return new ImageObject(name, confidence, null);
             }
         }
-
-
     }
 
     class Program
