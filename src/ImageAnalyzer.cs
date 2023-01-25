@@ -12,6 +12,9 @@ class ImageAnalyzer
         Description,
         Categories,
         Color,
+        Tags,
+        ImageType,
+        Faces,
     }
 
     public string ImagePath { get; }
@@ -62,6 +65,29 @@ class ImageAnalyzer
         return json.color;
     }
 
+    public async Task<IReadOnlyList<Json.Tag>> GetTags()
+    {
+        var response = await SendRequest(RequestType.Tags);
+        var json = await DeserializeResponse(response);
+        Debug.Assert(json.tags is not null);
+        return json.tags;
+    }
+
+    public async Task<Json.ImageType> GetImageType()
+    {
+        var response = await SendRequest(RequestType.ImageType);
+        var json = await DeserializeResponse(response);
+        Debug.Assert(json.imageType is not null);
+        return json.imageType;
+    }
+
+    public async Task<IReadOnlyList<Json.Face>> GetFaces()
+    {
+        var response = await SendRequest(RequestType.Faces);
+        var json = await DeserializeResponse(response);
+        Debug.Assert(json.faces is not null);
+        return json.faces;
+    }
 
     private Task<byte[]> GetImageBytes()
     {

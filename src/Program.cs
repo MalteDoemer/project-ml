@@ -7,13 +7,13 @@ class Program
     public static async Task Main()
     {
         var apiKey = File.ReadAllText("api-key.txt");
-        var analyzer = new ImageAnalyzer("./res/image3.jpg", apiKey);
+        var analyzer = new ImageAnalyzer("./res/image4.jpg", apiKey);
 
-        var objs = analyzer.GetObjects();
+        var faces = await analyzer.GetFaces();
 
-        foreach (var obj in await objs)
+        foreach (var face in faces)
         {
-            Console.WriteLine(obj.@object);
+            Console.WriteLine(face.age);
         }
     }
 }
