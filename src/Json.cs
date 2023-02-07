@@ -1,7 +1,7 @@
 
 namespace ML.Json;
 
-public record Face(int age, string gender, Rectangle faceRectangle);
+public record Face(int age, string gender, FaceRectangle faceRectangle);
 
 public record Category(string name, double score);
 
@@ -20,5 +20,7 @@ public record Metadata(int height, int width, string format);
 public record Object(Rectangle? rectangle, string @object, double confidence, Object? parent);
 
 public record Rectangle(int x, int y, int w, int h);
+
+public record FaceRectangle(int left, int top, int width, int height);
 
 public record Root(Description? description, ImageType? imageType, ColorDescription? color, IReadOnlyList<Tag>? tags, IReadOnlyList<Object>? objects, IReadOnlyList<Face>? faces, IReadOnlyList<Category>? categories, string requestId, Metadata metadata);

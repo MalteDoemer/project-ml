@@ -84,6 +84,7 @@ class ImageAnalyzer
     public async Task<IReadOnlyList<Json.Face>> GetFaces()
     {
         var response = await SendRequest(RequestType.Faces);
+        Console.WriteLine(await response.Content.ReadAsStringAsync());
         var json = await DeserializeResponse(response);
         Debug.Assert(json.faces is not null);
         return json.faces;
