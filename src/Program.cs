@@ -46,29 +46,17 @@ class Program
 
         var apiKey = File.ReadAllText(apiKeyFile);
         var analyzer = new ImageAnalyzer(file, apiKey);
-
-        var bm = new Bitmap(Image.FromFile(file));
-        var redPen = new Pen(Brushes.Red, 10.0f);
-        var drawFont = new Font("Consolas", 128);
+        using var editor = new ImageEditor(file);
 
         var faces = await analyzer.GetFaces();
 
-        using (var gr = Graphics.FromImage(bm))
+        foreach (var face in faces)
         {
-            foreach (var face in faces)
-            {
-                var rect = new Rectangle(face.faceRectangle.left, face.faceRectangle.top, face.faceRectangle.width, face.faceRectangle.height);
-                gr.DrawRectangle(redPen, rect);
-
-                var xMiddle = rect.X + (rect.Width / 2);
-                var yMiddle = rect.Y + (rect.Height / 2);
-
-                gr.DrawString($"{face.age}", drawFont, Brushes.Red, new PointF(xMiddle, yMiddle));
-            }
-
-            gr.Save();
+            var rect = new Rectangle(face.faceRectangle.left, face.faceRectangle.top, face.faceRectangle.width, face.faceRectangle.height);
+            editor.DrawRectangle(rect);
+            editor.DrawTextInRectangle(face.age.ToString(), rect);
         }
 
-        bm.Save(output);
+        editor.Save(output);
     }
 }
